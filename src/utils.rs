@@ -1,5 +1,6 @@
 use crate::http::Signature;
-use base64::encode;
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine;
 use ed25519_dalek::pkcs8::DecodePrivateKey;
 use ed25519_dalek::SigningKey;
 use ed25519_dalek::{Signature as Ed25519Signature, Signer};
@@ -26,7 +27,7 @@ fn sign_ed25519(payload: &str, key: &str) -> Result<String, InvalidLength> {
 
     let signing_key: SigningKey = SigningKey::from_bytes(&private.unwrap().to_bytes());
     let signature: Ed25519Signature = signing_key.sign(&payload.to_string().into_bytes());
-    Ok(encode(signature.to_bytes()))
+    Ok(STANDARD.encode(signature.to_bytes()))
 }
 
 #[cfg(test)]

@@ -13,7 +13,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["enable-ureq", "enable-tungstenite"]
+default = ["enable-tokio-tungstenite", "enable-hyper"]
 enable-hyper = [ "hyper", "hyper-tls", "serde_json", "futures-util", "tokio" ]
 enable-ureq = [ "ureq", "serde_json" ]
 enable-tungstenite = ["tungstenite"]

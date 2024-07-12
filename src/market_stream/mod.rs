@@ -44,7 +44,11 @@ pub fn diff_depth_100ms(symbol: &str) -> DiffDepthStream {
 }
 
 pub fn klines(symbol: &str, interval: KlineInterval) -> KlineStream {
-    KlineStream::new(symbol, interval)
+    KlineStream::new(symbol, interval, None)
+}
+
+pub fn klines_timezone(symbol: &str, interval: KlineInterval, timezone: &str) -> KlineStream {
+    KlineStream::new(symbol, interval, Some(timezone.to_string()))
 }
 
 pub fn individual_symbol_mini_ticker(symbol: &str) -> MiniTickerStream {

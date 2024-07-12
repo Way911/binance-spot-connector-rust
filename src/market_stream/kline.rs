@@ -19,13 +19,15 @@ use crate::websocket::Stream;
 pub struct KlineStream {
     symbol: String,
     interval: KlineInterval,
+    timezone: Option<String>,
 }
 
 impl KlineStream {
-    pub fn new(symbol: &str, interval: KlineInterval) -> Self {
+    pub fn new(symbol: &str, interval: KlineInterval, timezone: Option<String>) -> Self {
         Self {
             symbol: symbol.to_lowercase(),
             interval,
+            timezone,
         }
     }
 }
@@ -33,6 +35,13 @@ impl KlineStream {
 impl From<KlineStream> for Stream {
     /// Returns stream name as `<symbol>@kline_interval`
     fn from(stream: KlineStream) -> Stream {
-        Stream::new(&format!("{}@kline_{}", stream.symbol, stream.interval))
+        if let Some(timezone) = stream.timezone {
+            Stream::new(&format!(
+                "{}@kline_{}@{}",
+                stream.symbol, stream.interval, timezone
+            ))
+        } else {
+            Stream::new(&format!("{}@kline_{}", stream.symbol, stream.interval))
+        }
     }
 }
