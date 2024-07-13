@@ -51,6 +51,7 @@ impl BinanceHttpClient<HttpsConnector<HttpConnector>> {
     }
 }
 
+#[allow(unused_assignments)]
 impl<T> BinanceHttpClient<T>
 where
     T: Connect + Clone + Send + Sync + 'static,
